@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.base.sso.utils.CustomPasswordEncoder;
 
 
+
 @SpringBootApplication
 @EnableTransactionManagement
 public class SSOAppliaction {
@@ -18,9 +19,9 @@ public class SSOAppliaction {
 	}
 	
 	@Bean
-	public PasswordEncoder noOpPasswordEncoder(){
-		
-		
+	public PasswordEncoder customPasswordEncoder() {
 		return new CustomPasswordEncoder();
 	}
+	
+	
 }

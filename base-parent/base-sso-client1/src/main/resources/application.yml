@@ -15,3 +15,8 @@ security:
     resource:
       jwt:
         key-uri: http://127.0.0.1:8081/server/oauth/token_key
+logging:
+  level: 
+    org:
+      springframework:
+        web: trace
