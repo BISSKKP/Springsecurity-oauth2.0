@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+<meta charset="utf-8" />
+<title>登录界面</title>
+</head>
+<body>
+
+<form action="/dologin" method="post">
+<span>用户名：</span>
+<input name="username" value="123456@qq.com" type="text">
+<br>
+<span>密码：</span>
+<input name="password" value="123456" type="password">
+<br>
+<span>验证码:</span>
+<input name="imageCode" type="text">
+<img alt="" src="/code/image?width=150">
+
+<br>
+<input type="checkbox" name="remember-me" value="true" >记住我
+
+<input type="submit"></input>
+</form>
+
+<hr>
+
+<form action="/authen/mobile" method="post">
+<span>手机号：</span>
+<input name="mobile" value="123456" type="text">
+<br>
+<span>短信验证码:</span>
+<input name="smsCode" type="text">
+<a href="/code/sms?mobile=123456" target="_blank">发送验证码</a>
+
+<br>
+<input type="checkbox" name="remember-me" value="true" >记住我
+
+<input type="submit"></input>
+</form>
+
+<hr>
+<span>社交登录</span>
+<a href="/qqLogin/callback.do">QQ 登录</a>
+<a href="/qqLogin/weixin">微信 登录</a>
+http://www.pinzhi365.com/login.html
+
+
+</body>
+</html>

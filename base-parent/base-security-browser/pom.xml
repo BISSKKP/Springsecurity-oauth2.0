@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.base</groupId>
+		<artifactId>base-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>base-security-browser</artifactId>
+
+	<dependencies>
+
+
+		<dependency>
+			<!-- base core -->
+			<groupId>com.base</groupId>
+			<artifactId>base-security-core</artifactId>
+			<version>${base.version}</version>
+		</dependency>
+
+
+		<!-- spring session 集群环境下session问题 -->
+		<!-- <dependency> <groupId>org.springframework.session</groupId> <artifactId>spring-session</artifactId> 
+			</dependency> -->
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
+		</dependency>
+
+
+	</dependencies>
+
+
+</project>

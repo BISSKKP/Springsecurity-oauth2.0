@@ -1,0 +1,99 @@
+
+	// 第一步 请求授权地址：
+	// get:   http://127.0.0.1:8061/oauth/authorize?response_type=code&client_id=01d60970-ba2f-4e0f-8440-a5df5172
+	
+	
+	//得到回调
+	//http://baidu.com?code=xxxx
+	
+	//第二步： 授权码模式
+	
+				//Post http://127.0.0.1:8061/oauth/token?
+				
+				//设置authorization  类型 basic auth
+				//填写username   clientid
+				//填写 password   client-secret
+	
+				//formdata 格式
+				//grant_type      authorization_code //固定值
+				//client_id       base-app
+				//code           2aIjg1 回调得到的code
+				//redirect_uri   http://baidu.com
+				//scope          all
+				
+				//得到返回
+				
+			//	{
+			//	    "access_token": "ce423fea-10e4-40ec-a876-5ca0b259b7a9",
+			//	    "token_type": "bearer",
+			//	    "refresh_token": "f36f37cc-57d9-4a45-aceb-d8beb14529bf",
+			//	    "expires_in": 43199,
+			//	    "scope": "all"
+			//	}
+	//第二步 ： 密码模式
+			//Post http://127.0.0.1:8061/oauth/token?
+			//设置authorization  类型 basic auth
+			//填写username   clientid
+			//填写 password   client-secret
+	
+			//formdata 格式
+			//grant_type      password //固定值
+			//username       用户名
+			//password       用户密码
+			//scope          all
+
+				
+			//得到返回
+			/**
+			 * {
+				    "access_token": "d89de667-b731-495b-bff8-67b68172bde2",
+				    "token_type": "bearer",
+				    "refresh_token": "4f73144a-7a85-4b3c-9ca8-dec77d7f51f9",
+				    "expires_in": 43199,
+				    "scope": "all"
+				}
+			 */
+	
+	
+	//得到token时
+		/**
+		 * {
+					    "access_token": "d89de667-b731-495b-bff8-67b68172bde2",
+					    "token_type": "bearer",
+					    "refresh_token": "4f73144a-7a85-4b3c-9ca8-dec77d7f51f9",
+					    "expires_in": 43199,
+					    "scope": "all"
+					}
+		 * 
+		 * 
+		 */
+		//http://127.0.0.1:8061/info
+		//在请求资源服务器时，需要在head中存放
+		//Authorization  :    bearer d89de667-b731-495b-bff8-67b68172bde2
+		///Authorization   token_type+空格+access_token
+	
+	
+	//app 在登陆时：
+	
+	//需要额外传入 
+	//设置authorization  类型 basic auth
+	//填写username   clientid
+	//填写 password   client-secret
+	
+	//同时传入password username
+	
+	
+	token过期需要刷新时请求地址
+	//Post http://127.0.0.1:8061/oauth/token?
+			//设置authorization  类型 basic auth
+			//填写username   clientid
+			//填写 password   client-secret
+	
+			//formdata 格式
+			//grant_type      refresh_token //固定值
+			//refresh_token       得到的刷新token
+			
+	
+	
+	
+	

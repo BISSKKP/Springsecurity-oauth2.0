@@ -1,0 +1,132 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.base</groupId>
+	<artifactId>base-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<druid.spring.version>1.1.10</druid.spring.version>
+		<druid.version>1.1.16</druid.version>
+		<spring.cloud.version>Hoxton.SR1</spring.cloud.version>
+
+		<spring.boot.version>2.2.2.RELEASE</spring.boot.version>
+
+		<cloud.security.version>0.0.1-SNAPSHOT</cloud.security.version>
+
+		<commons-io.version>1.3.2</commons-io.version>
+
+		<!-- 当前项目拥有的版本 -->
+		<base.version>0.0.1-SNAPSHOT</base.version>
+
+		<!-- swagger -->
+		<springfox-swagger.version>2.5.0</springfox-swagger.version>
+		<springfox-swagger-ui>2.5.0</springfox-swagger-ui>
+		<springfox-swagger-bean>2.5.0</springfox-swagger-bean>
+
+		<mybatis.spring.boot.version>1.2.0</mybatis.spring.boot.version>
+	</properties>
+
+	<modules>
+		<module>base-security-app</module>
+		<module>base-security-demo</module>
+		<module>base-pojo</module>
+		<module>base-common</module>
+		<module>base-security-core</module>
+		<module>base-security-browser</module>
+		<module>base-security-demo-app</module>
+		<module>base-sso</module>
+		<module>base-sso-client1</module>
+		<module>base-sso-client2</module>
+	</modules>
+
+
+
+
+	<dependencyManagement>
+
+		<dependencies>
+
+			<!-- spring boot -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- spring io 自动帮助配置最合适jar包版本 -->
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>Brussels-SR7</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- spring cloud H -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- 数据库连接池 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>${druid.spring.version}</version>
+			</dependency>
+
+			<!-- mybatis starter -->
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>${mybatis.spring.boot.version}</version>
+			</dependency>
+			<!-- 版本缺失代码不推荐使用 -->
+			<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-web</artifactId> 
+				<version>5.1.4.RELEASE</version> </dependency> -->
+			<!-- spring-social-web 修复了其他版本方法缺失问题 -->
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-web</artifactId>
+				<version>1.1.6.RELEASE</version>
+			</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<!-- 指明版本，解决redis存储出现的问题：java.lang.NoSuchMethodError: org.springframework.data.redis.connection.RedisConnection.set([B[B)V问题 -->
+			<version>2.3.3.RELEASE</version>
+		</dependency>
+
+
+		</dependencies>
+
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
