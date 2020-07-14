@@ -1,0 +1,18 @@
+server:
+  port: 7001
+
+eureka:
+  instance:
+    hostname: eureka7001.com #eureka服务端的实力名称
+    server:
+      enable-self-preservation: false #关闭自我保护,防止因保护模式而不将挂掉的服务踢出掉----正式库时不推荐使用
+      eviction-interval-timer-in-ms: 60000 #eureka server清理无效节点的时间间隔，默认60000毫秒，即60秒
+  client:
+    register-with-eureka: false #false表示不向注册中心注册自己
+    fetch-registry: false #false表示自己端就是注册中心，我的职责就是维护服务实力，并不需要去检索服务
+    service-url:
+       #单机配置  defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://eureka7002.com:7002/eureka/ #集群版相互注册
+spring:
+  application:
+    name: cloud-eureka

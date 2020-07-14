@@ -1,0 +1,50 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: cloud-authorization-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/cloud?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+# mybatis-plus相关配置
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.base.pojo
+  # 以下配置均有默认值,可以不设置
+  global-config:
+    db-config:
+      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: auto
+      #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
+      field-strategy: NOT_EMPTY
+      #数据库类型
+      db-type: MYSQL
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+eureka:
+  client:
+    register-with-eureka: true #表示是否将自己注册进eurekaserver 默认true
+    fetch-registry: true #是否从eurekaserver抓取自己有的注册信息，默认true，单节点无所谓，集群必须为true才能配合ribbon使用负载均衡
+    service-url:
+       #单机版 defaultZone: http://localhost:7001/eureka
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+  instance:
+    instance-id: authorization
+    prefer-ip-address: true #访问路径可以显示ip地址
+    lease-renewal-interval-in-seconds: 30 #eureka 客户端向服务器端发送心跳时间间隔，单位为秒（默认30秒）
+    lease-expiration-duration-in-seconds: 90 #eureka 服务端在收到最好一次心跳后等待时间上限，单位为秒（默认90秒），超时将删除服务
+security:
+  oauth2:
+    resource:
+      filter-order: 3
+  

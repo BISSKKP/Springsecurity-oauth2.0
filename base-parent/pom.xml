@@ -39,6 +39,11 @@
 		<module>base-sso</module>
 		<module>base-sso-client1</module>
 		<module>base-sso-client2</module>
+		<module>base-eureka-server01</module>
+		<module>base-eureka-server02</module>
+		<module>base-cloud-authorization-server</module>
+		<module>base-cloud-gateway</module>
+		<module>base-cloud-resources</module>
 	</modules>
 
 
@@ -107,6 +112,20 @@
 			<artifactId>spring-security-oauth2</artifactId>
 			<!-- 指明版本，解决redis存储出现的问题：java.lang.NoSuchMethodError: org.springframework.data.redis.connection.RedisConnection.set([B[B)V问题 -->
 			<version>2.3.3.RELEASE</version>
+		</dependency>
+		
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>0.7.0</version>
+			</dependency>
+			
+			
+				<!-- mybatisPlus 核心库 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.1.0</version>
 		</dependency>
 
 
