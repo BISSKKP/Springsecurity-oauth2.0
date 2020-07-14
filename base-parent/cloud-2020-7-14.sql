@@ -1,0 +1,104 @@
+/*
+SQLyog Ultimate v12.09 (64 bit)
+MySQL - 5.7.19-log : Database - cloud
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`cloud` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
+
+USE `cloud`;
+
+/*Table structure for table `cloud_userconnection` */
+
+DROP TABLE IF EXISTS `cloud_userconnection`;
+
+CREATE TABLE `cloud_userconnection` (
+  `userId` varchar(255) COLLATE utf8_bin NOT NULL,
+  `providerId` varchar(255) COLLATE utf8_bin NOT NULL,
+  `providerUserId` varchar(255) COLLATE utf8_bin NOT NULL,
+  `rank` int(11) NOT NULL,
+  `displayName` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `profileUrl` varchar(512) COLLATE utf8_bin DEFAULT NULL,
+  `imageUrl` varchar(512) COLLATE utf8_bin DEFAULT NULL,
+  `accessToken` varchar(512) COLLATE utf8_bin NOT NULL,
+  `secret` varchar(512) COLLATE utf8_bin DEFAULT NULL,
+  `refreshToken` varchar(512) COLLATE utf8_bin DEFAULT NULL,
+  `expireTime` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`userId`,`providerId`,`providerUserId`),
+  UNIQUE KEY `UserConnectionRank` (`userId`,`providerId`,`rank`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `cloud_userconnection` */
+
+insert  into `cloud_userconnection`(`userId`,`providerId`,`providerUserId`,`rank`,`displayName`,`profileUrl`,`imageUrl`,`accessToken`,`secret`,`refreshToken`,`expireTime`) values ('素颜','callback.do','069AA808F998B54006F82983ECE9053A',1,'素颜',NULL,'http://thirdqq.qlogo.cn/g?b=oidb&k=XjzvribKEwrM17zNSh3KMbw&s=40&t=1583828094','D93A53F8B60623D12D80D785F10C33CE',NULL,'80FE18919EC76BE1E6254EB95C5486B5',1599968656333);
+
+/*Table structure for table `payment` */
+
+DROP TABLE IF EXISTS `payment`;
+
+CREATE TABLE `payment` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `serial` varchar(200) COLLATE utf8_bin DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `payment` */
+
+insert  into `payment`(`id`,`serial`) values (1,'asd'),(2,'asdsa'),(3,'sadsadsa'),(4,NULL),(5,NULL),(6,'a1'),(7,NULL),(8,NULL),(9,'12'),(10,'123333'),(11,'122'),(12,'122'),(13,'122'),(14,'122'),(15,'122'),(16,'122'),(17,'122'),(18,'122'),(19,'122'),(20,'122'),(21,'122'),(22,'122'),(23,'122'),(24,'122'),(25,'122'),(26,'122'),(27,'122'),(28,'122'),(29,'122'),(30,'122'),(31,'122'),(32,'122'),(33,'122'),(34,'122'),(35,'122'),(36,'122'),(37,'122'),(38,'122'),(39,'122'),(40,'122'),(41,'122'),(42,'122'),(43,'122'),(44,'122'),(45,'122'),(46,'122'),(47,'122'),(48,'122'),(49,'122'),(50,'122'),(51,'122'),(52,'122'),(53,'122'),(54,'122'),(55,'122'),(56,'122'),(57,'122'),(58,'122'),(59,'122'),(60,'122'),(61,'122'),(62,'122'),(63,'122'),(64,'122'),(65,'122'),(66,'122'),(67,'122'),(68,'122'),(69,'122'),(70,'122'),(71,'122');
+
+/*Table structure for table `persistent_logins` */
+
+DROP TABLE IF EXISTS `persistent_logins`;
+
+CREATE TABLE `persistent_logins` (
+  `username` varchar(64) COLLATE utf8_bin NOT NULL,
+  `series` varchar(64) COLLATE utf8_bin NOT NULL,
+  `token` varchar(64) COLLATE utf8_bin NOT NULL,
+  `last_used` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`series`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `persistent_logins` */
+
+/*Table structure for table `sys_user` */
+
+DROP TABLE IF EXISTS `sys_user`;
+
+CREATE TABLE `sys_user` (
+  `id` varchar(64) NOT NULL COMMENT '主键',
+  `name` varchar(100) NOT NULL COMMENT '姓',
+  `first_name` varchar(100) NOT NULL COMMENT '名',
+  `sex` char(1) DEFAULT '0' COMMENT '性别',
+  `email` varchar(100) NOT NULL COMMENT '账户/邮箱',
+  `password` varchar(200) NOT NULL COMMENT '密码',
+  `head_image` varchar(200) DEFAULT NULL COMMENT '头像',
+  `head_image_id` varchar(64) DEFAULT NULL COMMENT '头像id',
+  `company_name` varchar(128) DEFAULT NULL COMMENT '公司名称',
+  `status` char(1) NOT NULL DEFAULT '0' COMMENT '账户状态 0 正常 1 禁用',
+  `user_type` char(1) NOT NULL DEFAULT '0' COMMENT '0 普通账户 1 企业用户',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记',
+  `ip` varchar(30) DEFAULT '0' COMMENT '上次登录ip地址',
+  `login_date` datetime DEFAULT NULL COMMENT '上次登录时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `sys_user` */
+
+insert  into `sys_user`(`id`,`name`,`first_name`,`sex`,`email`,`password`,`head_image`,`head_image_id`,`company_name`,`status`,`user_type`,`create_by`,`create_date`,`update_by`,`update_date`,`del_flag`,`ip`,`login_date`) values ('045fdce1-ea09-4aba-bc1b-e95724c04dcc','12313','','','3213123123@qq.com','8d1b580e12df9e4cf83f9e66aa82048b601660b726ae5c54614ad30c',NULL,NULL,'HongKong','1','0','1','2019-12-05 18:11:56','1','2019-12-19 14:36:45','1','0',NULL),('0633766f-1a7e-4446-b3d6-ce9591642a5e','sdsad','test','0','dsadasd','a434466103a5627e0699a7c0a2498f5aaafbe8e2059343560ab298cb',NULL,NULL,NULL,'0','0','1','2020-01-15 10:24:51','1','2020-01-15 10:24:51','0','0',NULL),('0e42452c-9225-45e4-86ad-654ccd2fad30','123','123','0','1234@qq.com','97c8cf1e78a6f01e30b83238eb09f95cdc2e7591a7f9378103ced6b8',NULL,NULL,NULL,'0','0','2fdd7b0c-19b8-4436-8df2-564751b0c663','2020-01-16 14:26:12','2fdd7b0c-19b8-4436-8df2-564751b0c663','2020-01-16 14:26:42','0','0',NULL),('1','123456','qq.com','0','123456@qq.com','20519702383ccae01ac899f74277aa89cba3076d21142d5f229fb444','','',NULL,'0','0','1','2019-01-09 14:57:40','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-06-28 08:35:24','0','0',NULL),('12435','Mohammad','Zuhaili','1','zuhailimohammad@a-c-i-d.com','389319b8ced5f792e2020496e1b8fb08100af3d2d671c6a39eb59981',NULL,NULL,NULL,'0','0','1','2019-04-02 11:38:55','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-04-02 11:53:57','0','0',NULL),('1de18a77-e3a6-4a0f-bfe7-3609744cc02b','Mokhtar','Nurhaziq','0','nurhaziqmokhtar@a-c-i-d.com','f9cc213b74df4997ca4ffada8d38803d8e07734bb05ce6d646381ae3',NULL,NULL,NULL,'0','0','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-09-17 13:21:05','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-09-17 05:24:38','1','0',NULL),('203f28f9-7738-44f8-a4ba-7c39babeabc4','asyraf','zainul','0','zainulzukifli@a-c-i-d.com','199163ed1997a5992ef0d2b6fe6294721f77071ace75d3de93ef5131',NULL,NULL,NULL,'0','0','1','2019-06-18 10:17:02','1','2019-06-27 03:52:22','1','0',NULL),('20519702383ccae01ac899f74277aa89cba3076d21142d5f229fb444','To','Vivien','1','viviento@a-c-i-d.com','d9a37e309e3ddc8e27ff197051d79950949fd204dd44ba13c7fd46fb','file/images/e94d4be2-5b78-4220-9eaa-1e2a40454ba9.png','e94d4be2-5b78-4220-9eaa-1e2a40454ba9',NULL,'0','0','1','2019-02-14 14:22:33','1','2019-05-08 10:08:23','0','0',NULL),('26c98ce0-68ca-4964-a8d7-5e83146257f8','Zhong','Don','0','donzhong@a-c-i-d.com','e039a060e50e86412ecef79c969942bf29df5839960847986e697233',NULL,NULL,NULL,'0','0','1','2019-02-14 14:18:09','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-04-10 17:13:56','0','0',NULL),('2cde2ca0-4fdd-429f-8fa3-5a43f9ab7779','Feng','Chris','0','chrisfeng@a-c-i-d.com','768dbd479922db6f19c87123a2172a5dd2a39ae77f2a75a89abd2a35',NULL,NULL,NULL,'0','0','1','2019-03-06 13:45:55','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-04-10 17:09:01','0','0',NULL),('2fdd7b0c-19b8-4436-8df2-564751b0c663','lqq03','lqq03','0','12@qq.com','aa4bf3855da19b74342b5c42c219003f142dbeea99d486b52cd557fe',NULL,'22b98843-71ae-4882-9c94-ef9ab53e9521',NULL,'0','1','1','2020-01-15 16:29:00','1','2020-01-17 15:22:24','0','0',NULL),('32393ce7-3f58-4e13-aa7f-b6fd71b4cd4b','chen','william','M','williamchen@a-c-i-d.com','f03e5a4f372967388d9ef81f039c77a5c143234ff897bb54e4aae89a',NULL,NULL,NULL,'0','0','1','2020-03-16 15:22:28','1','2020-05-26 17:59:39','0','0',NULL),('39ac66f9-7790-4ae2-a63b-dbda387579e4','Chang','Fong Hei','0','fonghei.chang@synoedge.com','74e63a9cc4286dca9e3166f456f9b98920158cc5c936d0739d04515a',NULL,NULL,NULL,'0','0','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-09-17 14:01:43','1','2019-12-30 12:04:12','0','0',NULL),('3b34509c-523c-4452-a21e-32c26f3678a7','Ivey','David','0','david.ivey@hok.com','ede5aefeeaaed6430310b82c040b0f852c28ebdc678cbaaac0f03af1',NULL,NULL,NULL,'0','0','1','2019-08-06 17:25:31','1','2019-08-06 17:30:36','0','0',NULL),('3d3800c0-5639-42ae-b2f3-b0b051dddca1','Chan','Stephen','0','stephenchan@a-c-i-d.com','fdb5c88fb8e1dfb6c4b3e32314a35a55cb7d117d7761624a9179ee63',NULL,NULL,NULL,'0','0','1','2019-02-14 14:21:45','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-04-10 17:09:29','0','0',NULL),('483399fa-3721-4cab-b102-b6f21976e3ad','Tsoi','Yuk','0','yuktsoi@a-c-i-d.com','55e7a62886a437b3ec6850f079dd6d94fa1e592f969c33503e7a5083',NULL,NULL,NULL,'0','0','1','2019-02-14 14:23:05','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-04-10 15:43:27','0','0',NULL),('4e8ad92d-5edd-4bb3-860a-eecc2fe5878e','dasd','ddd','1','dsadsd','c78ac390ed254228931f786e20cbc995d49d3570daf3e0f310408abf',NULL,NULL,NULL,'0','0','1','2020-01-15 15:26:21','1','2020-01-15 15:57:14','1','0',NULL),('5228339a-8e53-442e-8b96-dd15d3c6a73a','asyraf','zainul','0','zainulasyraf@a-c-i-d.com','706b92c8db91581ebad84fc94d9660a12f6007b84671332c717a1dfe',NULL,NULL,NULL,'1','0','1','2019-06-17 13:50:22','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-06-18 01:58:45','1','0',NULL),('523e684d-285b-48c8-8462-fb3b4085e57e','Lawson','Scott','0','scott.lawson@hok.com','d3bba23a7954e88836f09d751a0d975124bcd451b1bedaef8fdb9acc',NULL,NULL,NULL,'0','0','1','2019-08-06 17:29:36','1','2019-08-06 17:29:36','0','0',NULL),('5ade4032-aab4-41d0-8279-de6e19e80248','152','wiliam','','123@qq.com','ae68461d50a499432d9163c51aa7d3fd8e06f0a9a9fecfce63503240',NULL,NULL,NULL,'0','0','1','2019-12-31 11:49:56','1','2020-01-10 11:42:40','0','0',NULL),('5c89cb0399ba9a0c84752e5526ff9ebe','sss','wanger','0','XX12','CC222',NULL,NULL,NULL,'0','0',NULL,NULL,NULL,NULL,'0','0',NULL),('5ee7e7e8-6401-4ee2-aab2-d2ae8567e8cd','Li','Jasper','0','jasperli@a-c-i-d.com','0fb469f53d5d228262e8981e55235f9286092e14a27348fae065cca0',NULL,NULL,NULL,'0','0','1','2019-02-14 14:19:25','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-04-10 17:13:22','0','0',NULL),('652a2bfb-b482-4df4-910f-3cc2316d6427','Hui','Pandora','1','pandorahui@a-c-i-d.com','6f50f55c5c5d0e0191a47a46b66807398fd983c06081f030c259ddb2',NULL,NULL,NULL,'0','0','1','2019-02-14 14:16:11','1','2019-06-17 17:03:39','0','0',NULL),('67073ab6-7342-4dee-b789-662e4f141766','Zantua','Goito','0','goitozantua@a-c-i-d.com','902f9b9feee362c33e8452e033fb83a42d063de02952ab9990d7314a',NULL,NULL,NULL,'0','0','1','2019-02-14 14:18:39','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-04-10 17:13:44','0','0',NULL),('6d162b11-c713-4b6c-9044-267199799a7b','Lee','Ken','0','ken_lee@cn.synnex-grp.com','31a0e879c02a97ca395c31d9c92e3abdc9a31b304bb03bb8db665dcf',NULL,NULL,NULL,'0','0','1','2019-06-28 16:35:12','1','2019-06-28 16:43:05','0','0',NULL),('749fa0bc-b4e9-4c74-92c9-3f79fe655b8e','Liu','Howard','0','928776712@qq.com','3b6bd2bee3171b5329731530c61b2a6558563d3ea520db30e45aa7c8',NULL,NULL,NULL,'0','0','1','2019-03-06 10:39:20','1','2020-03-14 21:34:31','0','0',NULL),('7848ff8e-aad3-4aa1-a031-45405030c6a5','Duran','Lordson','0','Lordsonduran@wongtung.com','346c3a87d8d423d5d6ac8921068029c8cc1b37dd4b2105d34823f8bf',NULL,NULL,NULL,'0','0','1','2019-09-12 11:43:43','1','2019-09-12 11:43:43','0','0',NULL),('79d1f207-2ebc-46ef-a016-f58270a3c3a2','Devraj','Sadhana','1','sadhanadevraj@a-c-i-d.com','c12a1feb8fbaaaa4ffb85021ae7399c3945ec468d15b1e676231d7e5',NULL,NULL,'','0','0','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-09-23 10:06:17','1','2019-12-30 12:09:49','0','0',NULL),('7e05163a-1135-425e-a042-46e7eda9695e','Li','Ping','0','pingli@a-c-i-d.com','e5ffbbab276f6f89f1d803ebf38736837c1943424cf9e93eafeac27e',NULL,NULL,NULL,'0','0','1','2019-02-14 14:20:15','7e05163a-1135-425e-a042-46e7eda9695e','2019-08-12 12:41:42','0','0',NULL),('83e95571-963b-4a5b-b52d-eb872fba5b2d','dsad','dsad','1','qq@qq.com','4e30dc6ad61f59baa7e2df861cabc3df29725228158b330648ca5ce4',NULL,NULL,NULL,'0','1','1','2020-01-16 17:44:08','1','2020-01-17 15:15:56','0','0',NULL),('84e65297-ebdc-46f3-8744-f07c577e7b1e','ccccc','xxxxxx','1','sdsad','f10343ebf86259c29224fd17f05c1134d784a31ae9257cf931977bdd',NULL,NULL,NULL,'0','0','1','2020-01-15 15:23:09','1','2020-01-15 16:00:55','1','0',NULL),('8503ddd1-d572-4a5a-8986-ba712e840edb','Ng','Yiing Jiun','0','yiingjiun.ng@synoedge.com','06e9a136c7b467e46fdc2d594733bdd49dee397b87395561a9905d45',NULL,NULL,NULL,'0','0','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-09-17 14:00:57','1','2019-12-30 12:03:50','0','0',NULL),('85a72618-47a5-4090-85df-6415b39a7e9d','Wong','Jason','0','jasonwong@a-c-i-d.com','bbab0666cc59605f0c3d8b6a9f5048f9bad0db5f998e6b9beaecf59a',NULL,NULL,NULL,'0','0','1','2019-02-14 14:19:01','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-04-10 17:13:34','0','0',NULL),('884d8e3d-8be2-49c1-9866-493b2af67d3a','Fung','David','0','davidfung@a-c-i-d.com','f827d4227cdc59b2b16f87d7a387a70fe6a0585a5590635572b1c569',NULL,NULL,'','0','0','1','2019-02-14 09:57:07','1','2019-11-18 18:08:44','0','0',NULL),('9117f72b-3d20-4e2d-a931-2b4c0e225f98','Chang','Eimly','1','emily.chang@hok.com','da801337acc5eb9816ecf3f4eb5e58e16e4995857975e017c84af854',NULL,NULL,NULL,'0','0','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-08-01 13:57:29','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-08-03 07:46:47','0','0',NULL),('94cc860f-5418-439d-b366-4d6ffae22b75','122','112','1','1237@qq.com','c863fb75a91af579fda56268f6a87b0648f8b405122f463123e144dc',NULL,NULL,NULL,'0','0','1','2020-05-04 15:38:08','1','2020-05-04 15:38:08','0','0',NULL),('a5ebac0f-f0ca-435b-8b90-2ff5072068d6','sdsd','fdfhf','M','413212343@qq.com','cc1c1a8cccf8f6bf9b567f3b330b50a66ca6278f91101e5b60f510ea',NULL,NULL,NULL,'0','1','1','2020-01-17 14:38:04','1','2020-01-17 15:11:44','0','0',NULL),('aa087c11-3a2a-4284-ae75-d4340b9e4c2c','Mokhtar','Nurhaziq','0','nurhaziqmokhtar@a-c-i-d.com','20fc3d94591cf81874e6fcc4cfe40c938c8aa3424c880cebcaa0f193',NULL,NULL,NULL,'0','0','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-09-17 13:20:30','aa087c11-3a2a-4284-ae75-d4340b9e4c2c','2019-09-23 14:35:09','0','0',NULL),('b1781661-df19-4ff5-8fb9-5a01f08471b7','Zhou','Ning','0','nzhou@wongtung.com','0129deaf85f9daf357cfc01f847a6d9a57f9468dce4b26b285df147a',NULL,NULL,NULL,'0','0','1','2019-08-06 17:30:13','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-09-16 16:08:54','1','0',NULL),('b369139e-310d-4643-98e5-e380fd50e459','Xie','Phoebe','0','xiexiaoping@a-c-i-d.com','a06fc012f2cd1223a82c138f85758e893c3f1df199b1939fe5e67cba',NULL,NULL,NULL,'0','0','1','2019-02-14 14:21:08','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-08-14 20:47:23','1','0',NULL),('c0b671b2-02aa-4c3a-b56e-836af1a5a6eb','Yang','Bobo','0','945548710@qq.com','771d40bf8df4ef645c2c0336f512b42add0427a0ac0c66a30a303ed8',NULL,NULL,NULL,'0','0','1','2019-03-06 10:33:11','c0b671b2-02aa-4c3a-b56e-836af1a5a6eb','2019-07-29 07:42:15','0','0',NULL),('c14bb2a3-1419-4f7c-ad97-b8ceae5afd22','12321','121','0','12345678@qq.com','d200bf67fbfdb94fd9f2be50b3053984bd7bb29569604b71a4bb0f2c',NULL,NULL,'','0','0','1','2019-11-11 09:39:44','1','2019-12-30 12:06:20','0','0',NULL),('c2874983-b59d-4c17-9302-e1ede2834afc','sd','eq','0','123456','72eb127bb7584c43951d094093d6ae138cdc27bb6fcbc5caeaa8776a',NULL,NULL,'','0','0','1','2019-12-03 14:21:32','1','2019-12-19 15:50:34','1','0',NULL),('c30e97f9-a202-49d7-9865-fc5d8d460eca','Cheng','Annie','1','anniecheng@a-c-i-d.com','df4dabc07e19c522d6e58178a9ffedd2753a6eb4895163e161cfd35a',NULL,NULL,NULL,'0','0','1','2019-02-14 14:17:04','1','2019-12-30 12:05:49','0','0',NULL),('c42dfade-e0a8-4a02-ac14-a20a1116173a','Dai','Novy','0','novydai@a-c-i-d.com','1ff24d581901c49dc149eee44a221f8cee16a79fff89c97760cc0560','file/images/8ffaac92-ecbd-4467-8213-e4a698166cec.jpg','b9816516-e8dc-4417-ab5d-9893c9d599aa',NULL,'0','0','1','2019-03-06 10:35:21','c42dfade-e0a8-4a02-ac14-a20a1116173a','2020-01-17 10:01:03','0','0',NULL),('cbbdbb7d-52de-437d-a7c3-5d6f4b119b77','Li','Kim','0','kimli@a-c-i-d.com','73a1a7b03ff64f740efab78824bd74a21dd57ef7242715e35bd54f52',NULL,NULL,NULL,'0','0','1','2019-02-14 14:19:47','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-04-10 17:13:09','0','0',NULL),('cfbcbfb5-febd-4934-a58a-ddefbc31ff1b','Pook','Keijin','0','keijin.pook@synoedge.com','31719fc168d62328f59544875547c39dc84583ba0321d8d4c7377b5c',NULL,NULL,NULL,'1','0','1','2019-07-03 07:51:12','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-08-26 03:18:47','1','0',NULL),('d26c6f28-ffcc-4c5c-9dc8-7b1c72e40fdd','wwww','qqqqq','1','sdsadasd','3af2b35b0430d44a7358a6422032c04cef09ef4f64875b98f701d7b1',NULL,NULL,NULL,'0','0','1','2020-01-15 11:34:29','1','2020-01-15 16:01:03','1','0',NULL),('d6c82ae1-7beb-42de-8ee6-7aa0285ad62e','fff','ffffff','1','saddas','af489e6485e51900f03285912a3a15861c2d2ea19826b797531ead78',NULL,NULL,NULL,'0','0','1','2020-01-15 15:24:27','1','2020-01-15 16:00:08','1','0',NULL),('d8ec8e4f-301d-402e-b4ee-c6c83a49c0da','Cai','Catherine','1','christine.cai@geosys.org','3420bb84336bf10b713c0239855d8a9ff2ac41beebd0fcaae93d17ad',NULL,NULL,NULL,'0','0','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-08-08 12:08:17','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-08-08 12:09:51','0','0',NULL),('dec68c39-a58f-4aeb-9fd3-bb7d48ef12e0','Cheong','Meiling','1','meiling.cheong@synoedge.com','0dcc141f50877ee879631494c4cf8525968e823a5cafc5efe41c54b4',NULL,NULL,NULL,'0','0','1','2019-07-03 07:50:31','1','2019-07-03 07:57:37','0','0',NULL),('e0376b8e-197c-4d46-abf3-ba152423838a','Tse','Linus','0','linustse@a-c-i-d.com','de63826c0214e06f4561326b3414bd0105b26ab4fd29bdb40424d518',NULL,NULL,NULL,'0','0','1','2019-02-14 14:20:43','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-09-04 09:04:27','1','0',NULL),('e1787be7-36d9-4d0a-ad9f-fd0fdb4fc346','123','123','M','170695215@stu.vtc.edu.hk xyz246fgh','62d163970c7906b5c7a9c6e06011027d5dbc2fdc8a3ae980c63867b9',NULL,NULL,NULL,'0','1','1','2020-03-16 12:12:37','1','2020-03-16 12:22:11','0','0',NULL),('e69b8839-dc20-431a-bc3a-e6b5e70bd4c3','Chung','Tom','0','tomchung@a-c-i-d.com','2028770fab6dbad276674c5871580cb499698510df51d8deb6dedc27',NULL,NULL,NULL,'0','0','1','2019-02-14 14:22:08','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-04-10 15:53:44','0','0',NULL),('ewrewrewwrwer','Xiao','Yong Zhi','0','xiaoyongzhi@a-c-i-d.com','3473b4037b17eb8f5cf9d8e95fe79fd7b5938097d93d7605947f3087',NULL,NULL,NULL,'0','0','1','2019-04-03 11:20:47','1','2019-05-23 13:15:22','0','0',NULL),('f0874df4-66c6-4510-94f8-57d5d79b4f76','sdd','test','0','sdda','cd40dd675fcdfb79712103c2e69d7387e81df4adf12a8f4a89e1987f',NULL,NULL,NULL,'0','0','1','2020-01-15 10:37:44','1','2020-01-15 10:37:44','0','0',NULL),('f285263d-9414-41c5-9910-229bef95a791','dasdas','test01','0','sdadad','4fa7b9dcf538fad7d2f54a9fa24d4e5020ae6ecd34efae5b78a5c759',NULL,NULL,NULL,'0','0','1','2020-01-15 10:41:39','1','2020-01-15 10:41:39','0','0',NULL),('f63ab9a9-71cb-46e0-984d-e675e1fec206','Radzi','Nur','1','nurradzi@a-c-i-d.com','86c73a49ead1bc6da3f6225388c2693eae57fcf675da5e36d7a45113',NULL,NULL,NULL,'0','0','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-08-26 11:25:35','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-08-29 07:32:42','1','0',NULL),('f7ff8b70-b455-4752-b7c5-0bdf4b7f9882','Yang','Casy','1','casy.yang@hok.com','26cf1a39a3d28647d3fda02cd9f1f16a894cc6977a20a95a859374a8',NULL,NULL,NULL,'0','0','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-08-05 13:23:24','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-08-05 13:23:24','0','0',NULL),('f88b819c-83b0-4649-957f-86538f301773','Wong','Kevin','0','info@civilconnect.com.hk','f948e6b70f9235fe83807bdea6b5688485529fcea81fdcdeec2d40c9',NULL,NULL,NULL,'0','0','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-08-10 13:16:34','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-08-25 16:24:12','0','0',NULL),('f9a8ad47-e1f6-4ae8-80c1-2b0d1bea188f','ddddd','test','1','12132','7855e6f1c8a9bc79b76e53741461d827c2dde40f1a152875dc230f83',NULL,NULL,NULL,'0','0','1','2020-01-15 10:12:05','1','2020-01-15 10:12:05','0','0',NULL),('f9c9721f-5733-40cc-9b1e-91f0acd0bf38','Wing','Mang','0','wingmang@a-c-i-d.com','d6d0613fd55a4f9d64cf908343334b6179a4b80b22878de6099f420b',NULL,NULL,NULL,'0','0','0bf31674-4184-40cd-86e7-a6d72856ae94','2019-03-08 17:16:23','884d8e3d-8be2-49c1-9866-493b2af67d3a','2019-04-10 15:53:27','0','0',NULL);
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
