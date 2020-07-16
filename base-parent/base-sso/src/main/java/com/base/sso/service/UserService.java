@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		log.info("登陆。。");
+		log.info("登陆。。1");
 		SysUser user=	getUserByEmail(username);
 		
 //		User securityUser=	new User(username, user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
