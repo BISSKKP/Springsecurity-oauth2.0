@@ -43,8 +43,4 @@ eureka:
     prefer-ip-address: true #访问路径可以显示ip地址
     lease-renewal-interval-in-seconds: 30 #eureka 客户端向服务器端发送心跳时间间隔，单位为秒（默认30秒）
     lease-expiration-duration-in-seconds: 90 #eureka 服务端在收到最好一次心跳后等待时间上限，单位为秒（默认90秒），超时将删除服务
-security:
-  oauth2:
-    resource:
-      filter-order: 3
   

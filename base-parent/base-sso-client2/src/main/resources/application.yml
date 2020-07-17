@@ -10,8 +10,8 @@ security:
     client:
       clientId: base-app02
       clientSecret: 123456
-      user-authorization-uri: http://127.0.0.1:8081/server/oauth/authorize
-      access-token-uri: http://127.0.0.1:8081/server/oauth/token
+      user-authorization-uri: http://127.0.0.1:8081/oauth/authorize
+      access-token-uri: http://127.0.0.1:8081/oauth/token
     resource:
       jwt:
-        key-uri: http://127.0.0.1:8081/server/oauth/token_key
+        key-uri: http://127.0.0.1:8081/oauth/token_key

@@ -1,11 +1,11 @@
 package com.base.config;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -15,38 +15,67 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import com.base.utils.CustomPasswordEncoder;
-
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+@Order(-1)
+public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAdapter{
 
-    // 认证管理器
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    // redis连接工厂
-    /*@Autowired
-    private JedisConnectionFactory JedisConnectionFactory;*/
-    
-    
-    @Autowired
-    private DataSource dataSource;
-    /**
-     * 令牌存储
-     * @return redis令牌存储对象
-     */
-    /*@Bean
-    public TokenStore tokenStore() {
-        return new RedisTokenStore(JedisConnectionFactory);
-    }
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Override
+	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(this.authenticationManager);
-        endpoints.tokenStore(tokenStore());
-    }*/
+	clients.inMemory()
+				.withClient("base-app01")
+				.secret("123456")
+				.authorizedGrantTypes("password","authorization_code","refresh_token")
+				.scopes("all")
+				.autoApprove(true)
+				.redirectUris("http://127.0.0.1:8000/login")
+			.and()
+				.withClient("base-app02")
+				.secret("123456")
+				.authorizedGrantTypes("password","authorization_code","refresh_token")
+				.scopes("all")
+				.autoApprove(true)
+				.redirectUris("http://127.0.0.1:8083/login")
+			.and()
+			.withClient("base-app04")
+			.secret("123456")
+			.authorizedGrantTypes("password","authorization_code","refresh_token")
+			.scopes("all")
+			.autoApprove(true)
+			.redirectUris("http://127.0.0.1:8084/login")
+			
+			;
 
-    /***
+	}
+	
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		
+		endpoints.tokenStore(jwtTokenStore()).accessTokenConverter(jwtAccessTokenConverter())
+		.authenticationManager(authenticationManager).userDetailsService(userDetailsService)
+		;
+		
+	}
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		
+		security.tokenKeyAccess("isAuthenticated()")
+		
+		;
+		
+	}
+	
+	
+	
+	
+	 /***
      * 配置JwtTokenStore ---> TokenStore只负责token的存储，不负责token的生成
      * @return
      */
@@ -69,45 +98,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             converter.setSigningKey("base");
             return converter;
 	}
-
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(jwtTokenStore()).
-        accessTokenConverter(jwtAccessTokenConverter())
-        .reuseRefreshTokens(true)
-        . authenticationManager(this.authenticationManager);
-    }
-
-    /**
-     * OAuth 授权端点开放
-     */
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security
-                // 开启/oauth/token_key验证端口无权限访问
-                .tokenKeyAccess("permitAll()")
-                // 开启/oauth/check_token验证端口认证权限访问
-                .checkTokenAccess("isAuthenticated()")
-                //主要是让/oauth/token支持client_id以及client_secret作登录认证
-                .allowFormAuthenticationForClients();
-    }
-    /**
-     * OAuth 配置客户端详情信息
-     */
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//        clients.jdbc(dataSource).passwordEncoder(new CustomPasswordEncoder());//密码不选择加密
-    	 
-    	clients.inMemory()
-         .withClient("client")
-         .secret("client-secret")
-         .authorizedGrantTypes("refresh_token", "password")
-         .scopes("all")
-         .accessTokenValiditySeconds(1200)
-         .refreshTokenValiditySeconds(50000);
-    	
-    	
-    }
-
-
+	
+	
+	
+	
+	
+	
 }

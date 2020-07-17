@@ -20,6 +20,7 @@ public class TestController {
 		return UUID.randomUUID().toString()+"+++port: "+port;
 	}
 	
+	
 	@GetMapping("/user")
 	public Authentication getInfo(Authentication authentication) {
 		

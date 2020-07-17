@@ -1,9 +1,9 @@
 
 
 server:
-  port: 8083
-  #servlet:
-   # context-path: /client2
+  port: 8084
+ # servlet:
+  #  context-path: /client4
 spring:
   application:
     name: cloud-res
@@ -15,7 +15,7 @@ eureka:
        #单机版 defaultZone: http://localhost:7001/eureka
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
   instance:
-    instance-id: res1
+    instance-id: res2
     prefer-ip-address: true #访问路径可以显示ip地址
     lease-renewal-interval-in-seconds: 30 #eureka 客户端向服务器端发送心跳时间间隔，单位为秒（默认30秒）
     lease-expiration-duration-in-seconds: 90 #eureka 服务端在收到最好一次心跳后等待时间上限，单位为秒（默认90秒），超时将删除服务
@@ -24,7 +24,7 @@ eureka:
 security:
   oauth2:
     client:
-      clientId: base-app02
+      clientId: base-app04
       clientSecret: 123456
       user-authorization-uri: http://127.0.0.1:8081/oauth/authorize
       access-token-uri: http://127.0.0.1:8081/oauth/token

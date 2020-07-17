@@ -8,19 +8,35 @@ spring:
       discovery:
         locator:
           enabled: true #开启从注册中心动态构建路由的功能，利用微服务名进行路由
+          lowerCaseServiceId: true #是否忽略服务名大小写
       routes:
         - id: res
            #uri: http://127.0.0.1:8000
-          uri: lb://CLOUD-RESOURCE
+          uri: lb://CLOUD-RES
           predicates:
-            - Path=/cloud-resource/**
+            - Path=/cloud-res/**
           filters :
-           - RewritePath=/cloud-resource/(?<segment>.*),/$\{segment}
+           - RewritePath=/cloud-res/(?<segment>.*),/$\{segment}
            - name: RequestRateLimiter
              args:
                key-resolver: '#{@uriKeyResolver}'
                redis-rate-limiter.replenishRate: 1
                redis-rate-limiter.burstCapacity: 2 #--1秒内最多2个
+           - name: Retry
+             args:
+               reties: 2
+               statuses: BAD_GATEWAY
+               series: 
+                  - SERVER_ERROR #表示5xx,以5开头的各种状态码
+               exceptions: #有以下异常时触发重试,此处注意timeout的时间与熔断设置的时间
+                  - java.util.concurrent.TimeoutException
+                  - java.net.ConnectException
+        - id: auth
+          uri: lb://CLOUD-AUTHORIZATION-SERVICE
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
   redis:
     port: 6379
     database: 0
@@ -32,9 +48,7 @@ spring:
       max-wait: -1
       min-idle: 0
         
-management:
-  security:
-    enabled: false
+
 eureka:
   client:
     register-with-eureka: true #表示是否将自己注册进eurekaserver 默认true
@@ -45,5 +59,7 @@ eureka:
   instance:
     instance-id: gateway9000
     prefer-ip-address: true #访问路径可以显示ip地址
+    
+
 
 

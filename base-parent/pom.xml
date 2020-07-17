@@ -44,6 +44,7 @@
 		<module>base-cloud-authorization-server</module>
 		<module>base-cloud-gateway</module>
 		<module>base-cloud-resources</module>
+		<module>base-cloud-resources2</module>
 	</modules>
 
 
