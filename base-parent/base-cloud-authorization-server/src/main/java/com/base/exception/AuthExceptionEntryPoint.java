@@ -1,4 +1,4 @@
-package com.base.config;
+package com.base.exception;
 
 import java.io.IOException;
 
@@ -16,10 +16,15 @@ import com.base.common.ajax.AjaxJson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
-
+/**
+ *	 重写 错误提示
+ * @author vsupa
+ *
+ */
 @Component
 @Slf4j
-public class AuthExceptionEntryPoint  implements AuthenticationEntryPoint{
+public class AuthExceptionEntryPoint implements AuthenticationEntryPoint {
+
 	@Autowired
 	private ObjectMapper objectMapper;
 	
@@ -33,14 +38,14 @@ public class AuthExceptionEntryPoint  implements AuthenticationEntryPoint{
 		response.setCharacterEncoding("UTF-8"); 
 		response.setContentType("application/json;charset=UTF-8");
 		
+
 		String  msg=authException.getMessage();
 		 if (authException instanceof InsufficientAuthenticationException) {
 			msg="请求需要授权";
 		}
+		 response.getWriter().write(objectMapper.writeValueAsString(AjaxJson.error(HttpServletResponse.SC_UNAUTHORIZED+"",msg )));
+			
 		
-		
-		response.getWriter().write(objectMapper.writeValueAsString(AjaxJson.error(HttpServletResponse.SC_UNAUTHORIZED+"",msg )));
-	
 	}
 
 }

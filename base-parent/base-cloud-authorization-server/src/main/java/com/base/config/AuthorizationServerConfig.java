@@ -15,6 +15,11 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import com.base.exception.AuthExceptionEntryPoint;
+import com.base.exception.CustomExceptionTranslator;
+import com.base.exception.CustomOauthExceptionSerializer;
+import com.base.exception.SelfAccessDeniedHandler;
+
 @Configuration
 @EnableAuthorizationServer
 @Order(-1)
@@ -25,6 +30,15 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private AuthExceptionEntryPoint authenticationEntryPoint;
+
+	@Autowired
+	private SelfAccessDeniedHandler accessDeniedHandler;
+	
+	@Autowired
+	private CustomExceptionTranslator customExceptionTranslator;
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -60,6 +74,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 		
 		endpoints.tokenStore(jwtTokenStore()).accessTokenConverter(jwtAccessTokenConverter())
 		.authenticationManager(authenticationManager).userDetailsService(userDetailsService)
+		.exceptionTranslator(customExceptionTranslator); 
 		;
 		
 	}
@@ -67,8 +82,9 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		
 		security.tokenKeyAccess("isAuthenticated()")
-		
-		;
+		.accessDeniedHandler(accessDeniedHandler)
+		.authenticationEntryPoint(authenticationEntryPoint)
+		; 
 		
 	}
 	
