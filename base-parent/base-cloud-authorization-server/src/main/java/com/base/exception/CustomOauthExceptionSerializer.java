@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -16,7 +15,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 /**
  * 	oauth2.  异常处理类重写
- * @author vsupa
+ * @author lqq
  *
  */
 public class CustomOauthExceptionSerializer  extends StdSerializer<CustomOauthException> {
