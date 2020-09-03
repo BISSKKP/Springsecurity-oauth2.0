@@ -32,6 +32,7 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
      */
     @Override
     protected Map<String, Object> getErrorAttributes(ServerRequest request, boolean includeStackTrace) {
+    	
         int code = 500;
         Throwable error = super.getError(request);
         if (error instanceof org.springframework.cloud.gateway.support.NotFoundException) {
@@ -89,6 +90,7 @@ protected int getHttpStatus(Map<String, Object> errorAttributes) {
         map.put("code", status);
         map.put("message", errorMessage);
         map.put("data", null);
+        map.put("success", false);
         return map;
     }
  
