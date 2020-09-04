@@ -17,9 +17,9 @@ public class AuthorizationApplication {
 		SpringApplication.run(AuthorizationApplication.class, args);
 	}
 	
-	@Bean
-	public PasswordEncoder customPasswordEncoder() {
-		return new CustomPasswordEncoder();
-	}
+//	@Bean
+//	public PasswordEncoder customPasswordEncoder() {
+//		return new CustomPasswordEncoder();
+//	}
 
 }

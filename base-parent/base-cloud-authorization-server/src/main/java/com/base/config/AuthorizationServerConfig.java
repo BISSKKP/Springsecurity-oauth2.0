@@ -1,24 +1,35 @@
 package com.base.config;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import com.base.exception.AuthExceptionEntryPoint;
 import com.base.exception.CustomExceptionTranslator;
-import com.base.exception.CustomOauthExceptionSerializer;
 import com.base.exception.SelfAccessDeniedHandler;
+import com.base.utils.PasswordEncoderUtils;
 
 @Configuration
 @EnableAuthorizationServer
@@ -40,26 +51,30 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	@Autowired
 	private CustomExceptionTranslator customExceptionTranslator;
 	
+	@Autowired
+	private TokenEnhancer customeTokenEnhancer;
+	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
 	clients.inMemory()
 				.withClient("base-app01")
-				.secret("123456")
+				.secret(new PasswordEncoderUtils().encode("123456"))
 				.authorizedGrantTypes("password","authorization_code","refresh_token")
 				.scopes("all")
 				.autoApprove(true)
 				.redirectUris("http://127.0.0.1:8000/login")
 			.and()
 				.withClient("base-app02")
-				.secret("123456")
+				.secret(new PasswordEncoderUtils().encode("123456"))
 				.authorizedGrantTypes("password","authorization_code","refresh_token")
 				.scopes("all")
 				.autoApprove(true)
 				.redirectUris("http://127.0.0.1:8083/login")
 			.and()
 			.withClient("base-app04")
-			.secret("123456")
+			.secret(new PasswordEncoderUtils().encode("123456")
+					)
 			.authorizedGrantTypes("password","authorization_code","refresh_token")
 			.scopes("all")
 			.autoApprove(true)
@@ -72,10 +87,18 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		
-		endpoints.tokenStore(jwtTokenStore()).accessTokenConverter(jwtAccessTokenConverter())
+		endpoints.tokenStore(jwtTokenStore())
+		
 		.authenticationManager(authenticationManager).userDetailsService(userDetailsService)
-		.exceptionTranslator(customExceptionTranslator); 
-		;
+		.exceptionTranslator(customExceptionTranslator);
+		
+		 TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+         List<TokenEnhancer> enhancers = new ArrayList<>();
+         enhancers.add(customeTokenEnhancer);
+         enhancers.add(jwtAccessTokenConverter());
+         enhancerChain.setTokenEnhancers(enhancers);
+		endpoints.tokenEnhancer(enhancerChain).accessTokenConverter(jwtAccessTokenConverter());
+		
 		
 	}
 	@Override
@@ -87,8 +110,6 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 		; 
 		
 	}
-	
-	
 	
 	
 	 /***

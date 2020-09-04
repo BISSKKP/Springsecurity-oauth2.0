@@ -17,6 +17,10 @@ public class GateWayApplication {
 		SpringApplication.run(GateWayApplication.class, args);
 	}
 	
+	/**
+	 * 限流
+	 * @return
+	 */
 	@Bean
 	public KeyResolver uriKeyResolver() {
 		

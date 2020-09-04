@@ -31,3 +31,21 @@ security:
     resource:
       jwt:
         key-uri: http://127.0.0.1:8081/oauth/token_key
+
+base:
+  security:
+    browser:
+      loginType: JSON
+      rememberMeSeconds: 3000
+      #--没有配置时会自动返回json格式
+      logoutUrl: /logout.html
+      session: 
+        maximumSessions: 1
+        maxSessionsPreventsLogin: false
+        sessionInvalidUrl: /demo-session-expire.html
+    code:
+      image:
+        length: 2
+      sms:
+        length: 2
+        dealUrl: /authen/mobile
