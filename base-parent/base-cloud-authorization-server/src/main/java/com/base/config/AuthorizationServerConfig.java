@@ -104,7 +104,13 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		
-		security.tokenKeyAccess("isAuthenticated()")
+		security
+		.allowFormAuthenticationForClients()
+		
+		.checkTokenAccess("permitAll()")//实现每个节点之间的负载均衡时需要配置此选项
+//		.tokenKeyAccess("isAuthenticated()")
+		
+		
 		.accessDeniedHandler(accessDeniedHandler)
 		.authenticationEntryPoint(authenticationEntryPoint)
 		; 

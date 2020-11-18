@@ -24,6 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http.httpBasic()
+		.and()
+		.authorizeRequests()
+        .antMatchers("/actuator/*","/login.html","/login","/dologin","/favicon.ico","/oauth/**").permitAll()
 		
 		;
 		
