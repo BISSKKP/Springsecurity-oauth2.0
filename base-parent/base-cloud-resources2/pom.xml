@@ -15,10 +15,23 @@
 			<version>${base.version}</version>
 		</dependency>
 		
+		 <!-- base common -->
+		<dependency>
+			<groupId>com.base</groupId>
+			<artifactId>base-auth-tokenServer</artifactId>
+			<version>${base.version}</version>
+		</dependency>
+		
    	<!-- eureka client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		
+		<!-- spring data-redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
   <dependency>
 			<groupId>org.springframework.boot</groupId>

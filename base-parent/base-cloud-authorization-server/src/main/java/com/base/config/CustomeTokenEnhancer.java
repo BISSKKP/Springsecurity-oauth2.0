@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author vsupa
  *
  */
-@Component
+@Component("tokenEnhancer")
 public class CustomeTokenEnhancer implements TokenEnhancer{
 
 	@Override

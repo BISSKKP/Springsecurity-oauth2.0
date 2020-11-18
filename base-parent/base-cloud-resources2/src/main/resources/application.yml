@@ -7,6 +7,16 @@ server:
 spring:
   application:
     name: cloud-res
+  redis:
+    port: 6379
+    database: 0
+    host: 127.0.0.1
+    password: 123456
+    pool:
+      max-active: 10
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0 
 eureka:
   client:
     register-with-eureka: true #表示是否将自己注册进eurekaserver 默认true
@@ -21,6 +31,8 @@ eureka:
     lease-expiration-duration-in-seconds: 90 #eureka 服务端在收到最好一次心跳后等待时间上限，单位为秒（默认90秒），超时将删除服务
 base:
   security:
+    oauth2:
+      tokenStore: redis #jwt 系统默认取jwt 此时数据交互使用http
     browser:
       loginType: JSON
       rememberMeSeconds: 3000

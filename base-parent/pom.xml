@@ -46,6 +46,7 @@
 		<module>base-cloud-resources</module>
 		<module>base-cloud-resources2</module>
 		<module>base-eurake-testService</module>
+		<module>base-auth-tokenServer</module>
 	</modules>
 
 
