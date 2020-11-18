@@ -1,0 +1,20 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: cloud-test-service
+
+eureka:
+  client:
+    register-with-eureka: true #表示是否将自己注册进eurekaserver 默认true
+    fetch-registry: true #是否从eurekaserver抓取自己有的注册信息，默认true，单节点无所谓，集群必须为true才能配合ribbon使用负载均衡
+    service-url:
+       #单机版 defaultZone: http://localhost:7001/eureka
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+  instance:
+    instance-id: gateway9000
+    prefer-ip-address: true #访问路径可以显示ip地址
+    
+
+
+

@@ -45,6 +45,7 @@
 		<module>base-cloud-gateway</module>
 		<module>base-cloud-resources</module>
 		<module>base-cloud-resources2</module>
+		<module>base-eurake-testService</module>
 	</modules>
 
 
