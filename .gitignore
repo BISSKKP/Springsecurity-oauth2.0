@@ -37,3 +37,4 @@ base-parent/base-cloud-gateway/.project
 base-parent/base-common/.project
 base-parent/base-common/.settings/org.eclipse.wst.common.project.facet.core.xml
 base-parent/base-eureka-server01/.project
+base-parent/base-auth-tokenServer/.project
