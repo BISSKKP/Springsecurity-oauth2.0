@@ -26,8 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.httpBasic()
 		.and()
 		.authorizeRequests()
-        .antMatchers("/actuator/*","/login.html","/login","/dologin","/favicon.ico","/oauth/**").permitAll()
-		
+        .antMatchers("/actuator/*","/login.html","/login","/dologin","/favicon.ico","/oauth/**").permitAll()		
 		;
 		
 	}

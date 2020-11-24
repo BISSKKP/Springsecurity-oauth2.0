@@ -1,8 +1,9 @@
 server:
   port: 8061
-  session:
-    #session 超时时间，但在springboot中session时间最少是一分钟
-    timeout: 60
+  servlet:
+    session:
+      #session 超时时间，但在springboot中session时间最少是一分钟
+      timeout: 60
 spring:
   application:
     name: base-demo-service
@@ -38,7 +39,7 @@ mybatis:
 base:
   security:
     browser:
-      loginType: JSON
+      loginType: Mix
       rememberMeSeconds: 3000
       #--没有配置时会自动返回json格式
       logoutUrl: /logout.html

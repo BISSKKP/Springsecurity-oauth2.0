@@ -23,3 +23,7 @@ base-parent/base-security-core/.classpath
 base-parent/base-security-browser/.classpath
 base-parent/base-security-app/.classpath
 base-parent/base-pojo/.classpath
+base-parent/base-cloud-authorization-server/.project
+base-parent/base-cloud-authorization-server/.project
+base-parent/base-cloud-authorization-server/.project
+base-parent/base-security-core/.project

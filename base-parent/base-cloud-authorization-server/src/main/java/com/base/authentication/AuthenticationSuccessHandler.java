@@ -25,6 +25,9 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.stereotype.Component;
 
 import com.base.common.ajax.AjaxJson;
+import com.base.properties.BaseProperties;
+import com.base.properties.LoginMethods;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -50,28 +53,51 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 	
 	@Autowired
 	private PasswordEncoder passwordEncoderUtils;
+	
+	@Autowired
+	private BaseProperties baseProperties;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws ServletException, IOException {
+			Authentication authentication) throws ServletException, IOException{
 
 		log.info("登录成功：" + objectMapper.writeValueAsString(authentication));
-
-		String[] tokens = getClientAndSecret(request);
-
+		String[] tokens=null;
+		
+		if(baseProperties.getLoginMethod().equals(LoginMethods.Authen)) {
+			try {
+				tokens= getClientAndSecret(request);
+			} catch (Exception e) {
+				writeResponse(response, objectMapper.writeValueAsString(AjaxJson.error("403", e.getMessage())));
+				return;
+			}
+		}else{
+			//表单登陆时取默认
+			tokens=new  String[]{baseProperties.getDefAppId(),baseProperties.getDefSecret()};
+		}
+		
 		// 创建 oAuth2Request
-		OAuth2Request oAuth2Request = convert(tokens);
+		OAuth2Request oAuth2Request= convert(tokens,false);
+		
 
 		// 创建 oAuth2Authentication
 		OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
 
 		// 创建本次成功的token
 		OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
-		// 只返回json
+		//返回json
+		
+		writeResponse(response, objectMapper.writeValueAsString(AjaxJson.success("token", token)));
+	}
+	
+	// 只返回json
+	private void writeResponse(HttpServletResponse response,String responseData) throws JsonProcessingException, IOException  {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().write(objectMapper.writeValueAsString(AjaxJson.success("token", token)));
+		response.getWriter().write(responseData);
 	}
+	
+	
 
 	/**
 	 * 创建 OAuth2Request
@@ -79,7 +105,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 	 * @param tokens
 	 * @return
 	 */
-	private OAuth2Request convert(String[] tokens) {
+	private OAuth2Request convert(String[] tokens,boolean getDefaultTokens) {
 		String clientId = tokens[0];
 		String secret = tokens[1];
    

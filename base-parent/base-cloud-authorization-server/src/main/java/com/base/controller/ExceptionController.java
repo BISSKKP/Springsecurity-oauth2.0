@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
+import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,6 +37,11 @@ public class ExceptionController {
     }
 	
 	
-	
+	@ResponseBody
+    @ExceptionHandler(value = UnapprovedClientAuthenticationException.class)
+	 public AjaxJson handleOauth3(UnapprovedClientAuthenticationException e) throws IOException {
+		
+		 return AjaxJson.error(403+"",e.getMessage());
+	}
 	
 }
