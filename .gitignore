@@ -27,3 +27,13 @@ base-parent/base-cloud-authorization-server/.project
 base-parent/base-cloud-authorization-server/.project
 base-parent/base-cloud-authorization-server/.project
 base-parent/base-security-core/.project
+base-parent/base-eureka-server01/.project
+base-parent/base-auth-tokenServer/.project
+base-parent/base-auth-tokenServer/.settings/org.eclipse.wst.common.project.facet.core.xml
+base-parent/base-cloud-authorization-server/.factorypath
+base-parent/base-cloud-authorization-server/.project
+base-parent/base-cloud-authorization-server/.project
+base-parent/base-cloud-gateway/.project
+base-parent/base-common/.project
+base-parent/base-common/.settings/org.eclipse.wst.common.project.facet.core.xml
+base-parent/base-eureka-server01/.project
