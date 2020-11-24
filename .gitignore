@@ -1,3 +1,5 @@
 .settings
 .classpath
 .project
+base-parent/base-auth-tokenServer/.classpath
+base-parent/base-auth-tokenServer/.classpath
