@@ -32,9 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-//	@Autowired(required = true)
-//	private RemoteTokenServices remoteTokenServices;
-
 	@Autowired
 	public RestTemplate restTemplate;
 

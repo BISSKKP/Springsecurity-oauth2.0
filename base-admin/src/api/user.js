@@ -8,8 +8,8 @@ export const login = ({ username, password }) => {
   return axios.request({
     url: '/auth/dologin',
     data,
-    method: 'post'
-    ,
+    method: 'post',
+    disableSuccessHandler:false,
     headers:{'Content-Type':'application/x-www-form-urlencoded'}
   })
 }

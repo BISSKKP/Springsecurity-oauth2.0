@@ -31,7 +31,6 @@ class HttpRequest {
     //参数中是普通表单
     if(options.data&&options.headers&&options.headers["Content-Type"]&&options.headers["Content-Type"].indexOf('x-www-form-urlencoded')!=-1){
       options.data=Qs.stringify(options.data);
-      console.log(options.data);
     }
 
     return config
@@ -43,8 +42,14 @@ class HttpRequest {
     }
   }
   //请求响应200 之后的默认处理
+  //当开发者在config中 disableSuccessHandler 等于true 时
+  //系统不再自动处理成功之后的结果
   successHandler(res){
-    console.log(res);
+    let data=res.data
+    if(!data.success){
+      Message.error(data.msg);
+    }
+    return  res;
   }
 
   interceptors (instance, url) {
@@ -64,10 +69,10 @@ class HttpRequest {
     instance.interceptors.response.use(res => {
       this.destroy(url)
       const { data, status } = res
-
-      this.successHandler(res);
-
-      return { data, status }
+      if(!res.config.disableSuccessHandler){
+        return { data, status }
+      }
+      return this.successHandler(res);
     }, error => {
       console.log("出错啦",error,url);
       this.destroy(url)
@@ -96,7 +101,6 @@ class HttpRequest {
 
     const instance = axios.create()
     options = Object.assign(this.getInsideConfig(options), options);
-    console.log(options);
     this.interceptors(instance, options.url)
     return instance(options)
   }
