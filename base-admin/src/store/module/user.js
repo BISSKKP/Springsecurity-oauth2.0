@@ -82,7 +82,8 @@ export default {
           password
         }).then(res => {
           const data = res.data
-          commit('setToken', data.token)
+          console.log("登陆结果",data);
+          commit('setToken', data.body.token)
           resolve()
         }).catch(err => {
           reject(err)
@@ -109,7 +110,8 @@ export default {
     getUserInfo ({ state, commit }) {
       return new Promise((resolve, reject) => {
         try {
-          getUserInfo(state.token).then(res => {
+          getUserInfo().then(res => {
+            console.log("获取用户跟人信息："+res);
             const data = res.data
             commit('setAvatar', data.avatar)
             commit('setUserName', data.name)

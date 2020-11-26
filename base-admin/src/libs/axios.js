@@ -2,6 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 const Qs = require('qs');
 import { data } from 'autoprefixer'
+import {  getToken } from '@/libs/util'
 import { Message } from 'iview'
 // import { Spin } from 'iview'
 const addErrorLog = errorInfo => {
@@ -14,7 +15,25 @@ const addErrorLog = errorInfo => {
   }
   if (!responseURL.includes('saveErrorLogger')) store.dispatch('addErrorLog', info)
 }
-
+/**
+ *  1. 使用规则，参数详解
+ * axios.request({
+    url: '/auth/dologin', 请求路径
+    data,   数据  json格式
+    method: 'post', 请求方式
+    disableSuccessHandler:false,   在http请求状态码==200 时，是否禁止 代码自动 处理 succeess =false 的情况，默认是false
+    noToken:true,   发送请求时是否需要携带token
+    postContentType:'postFrom', 发送post请求时 需要的contentType 类型 postForm  普通的表单
+                               不写时，post 提交数据是 json格式
+    // postContentType:'postFrom' 等价于 headers:{'Content-Type':'application/x-www-form-urlencoded'},
+  })
+ * 
+ * 重要方法和参数
+ * proxyPrefix 请求需要代理时 需要替换的url目标，不需要时 请==''
+ * 
+ * 
+ * 
+ */
 class HttpRequest {
   constructor (baseUrl = baseURL,proxyPrefix = proxyPrefix) {
     this.baseUrl = baseUrl
@@ -22,15 +41,32 @@ class HttpRequest {
     this.queue = {}
   }
   getInsideConfig (options) {
-    const config = {
-      baseURL: this.baseUrl,
-      headers: {
-        //
+
+    let headers={};
+    if(!options.noToken){
+      //请求是否携带token
+      //所有的请求都需要携带token
+      let token=getToken();
+      if(token){
+        token=JSON.parse(token||{})
+        headers['Authorization']=token.token_type +" "+token.access_token
       }
     }
+    //如果参数中包含postForm
+    if("postForm"==options.postContentType){
+      headers['Content-Type']='application/x-www-form-urlencoded';//普通表单
+    }
+   
+    const config = {
+      baseURL: this.baseUrl,
+      headers: headers
+    }
+    console.log(headers);
     //参数中是普通表单
-    if(options.data&&options.headers&&options.headers["Content-Type"]&&options.headers["Content-Type"].indexOf('x-www-form-urlencoded')!=-1){
-      options.data=Qs.stringify(options.data);
+    if(headers["Content-Type"]&&headers["Content-Type"].indexOf('x-www-form-urlencoded')!=-1){
+      if(options.data){
+        options.data=Qs.stringify(options.data);
+      }
     }
 
     return config
@@ -100,6 +136,7 @@ class HttpRequest {
 
     const instance = axios.create()
     options = Object.assign(this.getInsideConfig(options), options);
+    console.log("请求 所有参数:",options);
     this.interceptors(instance, options.url)
     return instance(options)
   }
@@ -107,7 +144,7 @@ class HttpRequest {
   dealError (errorInfo){
     if(!errorInfo.config.url.includes('saveErrorLogger')){
       if(errorInfo.data){
-        Message.error(errorInfo.data.msg);
+        Message.error(errorInfo.data.msg?errorInfo.data.msg:"服务忙，请稍后~");
       }
     }
   }

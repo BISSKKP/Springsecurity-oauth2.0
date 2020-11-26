@@ -10,15 +10,17 @@ export const login = ({ username, password }) => {
     data,
     method: 'post',
     disableSuccessHandler:false,
-    headers:{'Content-Type':'application/x-www-form-urlencoded'}
+    noToken:true,
+    postContentType:'postForm',
+    // postContentType:'postFrom' 等价于 headers:{'Content-Type':'application/x-www-form-urlencoded'},
   })
 }
 
-export const getUserInfo = (token) => {
+export const getUserInfo = () => {
   return axios.request({
-    url: 'get_info',
+    url: 'auth/user',
     params: {
-      token
+      
     },
     method: 'get'
   })
