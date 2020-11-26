@@ -82,9 +82,10 @@ class HttpRequest {
   //系统不再自动处理成功之后的结果
   successHandler(res){
     const { data, status } = res
-    if(!data.success){
+    if(!data.success&&!data.msg){
       Message.error(data.msg);
     }
+    console.log("错误处理器：",data)
     return   { data, status } ;
   }
 
