@@ -39,7 +39,7 @@ public class SeAuthenticationFailHandler extends SimpleUrlAuthenticationFailureH
 		
 		log.info("登录失败的信息："+objectMapper.writeValueAsString(exception));
 			//只返回json
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setStatus(HttpStatus.FORBIDDEN.value());
 			response.setCharacterEncoding("UTF-8"); 
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().write(objectMapper.writeValueAsString(AjaxJson.error("-100", exception.getMessage())));

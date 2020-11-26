@@ -1,5 +1,6 @@
 package com.base.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -24,6 +25,10 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("登陆。。");
+		
+		if(StringUtils.isBlank(username)) {
+				throw new UsernameNotFoundException("请输入账户信息");
+		}
 		SysUser user=	getUserByEmail(username);
 		
 //		User securityUser=	new User(username, user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
