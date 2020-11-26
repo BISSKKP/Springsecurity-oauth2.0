@@ -45,11 +45,11 @@ class HttpRequest {
   //当开发者在config中 disableSuccessHandler 等于true 时
   //系统不再自动处理成功之后的结果
   successHandler(res){
-    let data=res.data
+    const { data, status } = res
     if(!data.success){
       Message.error(data.msg);
     }
-    return  res;
+    return   { data, status } ;
   }
 
   interceptors (instance, url) {
@@ -68,9 +68,8 @@ class HttpRequest {
     // 响应拦截
     instance.interceptors.response.use(res => {
       this.destroy(url)
-      const { data, status } = res
-      if(!res.config.disableSuccessHandler){
-        return { data, status }
+      if(res.config.disableSuccessHandler){
+        return res;
       }
       return this.successHandler(res);
     }, error => {
