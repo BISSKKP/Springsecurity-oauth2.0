@@ -1,5 +1,5 @@
 server:
-  port: 8061
+  port: 80
   servlet:
     session:
       #session 超时时间，但在springboot中session时间最少是一分钟

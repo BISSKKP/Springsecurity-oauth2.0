@@ -26,7 +26,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.httpBasic()
 		.and()
 		.authorizeRequests()
-        .antMatchers("/actuator/*","/login.html","/login","/dologin","/favicon.ico","/oauth/**","/saveErrorLogger").permitAll()		
+        .antMatchers("/actuator/*","/login.html","/login","/dologin","/favicon.ico","/oauth/**","/saveErrorLogger"
+        		
+        		,"/swagger/**",
+				"/swagger-resources/**",
+				"/swagger-ui.html",
+				"/v2/api-docs-ext",
+				"/webjars/**",
+				"/v2/api-docs",
+				"/**/doc.html"
+				
+        		).permitAll()		
 		;
 		
 	}

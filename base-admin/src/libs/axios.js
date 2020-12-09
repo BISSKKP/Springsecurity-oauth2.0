@@ -61,7 +61,6 @@ class HttpRequest {
       baseURL: this.baseUrl,
       headers: headers
     }
-    console.log(headers);
     //参数中是普通表单
     if(headers["Content-Type"]&&headers["Content-Type"].indexOf('x-www-form-urlencoded')!=-1){
       if(options.data){

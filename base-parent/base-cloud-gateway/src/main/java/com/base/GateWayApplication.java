@@ -13,6 +13,12 @@ import reactor.core.publisher.Mono;
 @EnableEurekaClient
 public class GateWayApplication {
 	
+	
+	/**
+	 * api 接口
+	 * http://127.0.0.1:9000/doc.html
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(GateWayApplication.class, args);
 	}

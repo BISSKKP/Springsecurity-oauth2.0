@@ -16,6 +16,10 @@ public class ResourceApplication2 {
 		SpringApplication.run(ResourceApplication2.class, args);
 	}
 	
+	/**
+	 * 开启负载均衡
+	 * @return
+	 */
 	@Bean
 	@LoadBalanced
 	public RestTemplate restTemplate() {

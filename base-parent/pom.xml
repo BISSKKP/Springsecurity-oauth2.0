@@ -20,10 +20,13 @@
 		<!-- 当前项目拥有的版本 -->
 		<base.version>0.0.1-SNAPSHOT</base.version>
 
-		<!-- swagger -->
-		<springfox-swagger.version>2.5.0</springfox-swagger.version>
-		<springfox-swagger-ui>2.5.0</springfox-swagger-ui>
-		<springfox-swagger-bean>2.5.0</springfox-swagger-bean>
+			<!-- swagger 2.7.0-->
+		<springfox-swagger.version>2.9.2</springfox-swagger.version>
+		<springfox-swagger-ui>2.9.2</springfox-swagger-ui>
+		<springfox-swagger-bean>2.9.2</springfox-swagger-bean>
+		<swagger-models>1.5.21</swagger-models>
+		<!-- swagger美化插件 -->
+		<swagger-bootstrap>1.9.6</swagger-bootstrap>
 
 		<mybatis.spring.boot.version>1.2.0</mybatis.spring.boot.version>
 	</properties>
@@ -130,6 +133,43 @@
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		
+		
+		
+		<!-- swagger-springmvc -->
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${springfox-swagger.version}</version>
+				<exclusions>
+				<exclusion>
+			            <groupId>io.swagger</groupId>
+			            <artifactId>swagger-models</artifactId>
+			        </exclusion>
+				</exclusions>
+			</dependency>
+			
+			<dependency>
+			    <groupId>io.swagger</groupId>
+			    <artifactId>swagger-models</artifactId>
+			    <version>${swagger-models}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${springfox-swagger-ui}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-bean-validators</artifactId>
+				<version>${springfox-swagger-bean}</version>
+			</dependency>
+			
+			<dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>${swagger-bootstrap}</version>
+        </dependency>
 
 
 		</dependencies>

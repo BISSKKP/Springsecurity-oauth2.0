@@ -12,6 +12,8 @@ const router = new Router({
   routes,
   mode: 'history'
 })
+
+
 const LOGIN_PAGE_NAME = 'login'
 
 const turnTo = (to, access, next) => {
@@ -57,6 +59,11 @@ router.beforeEach((to, from, next) => {
     iView.LoadingBar.finish()
     window.scrollTo(0, 0)
   })
+  //路由会莫名报错，此行代码用于解决错误提示
+  const originalPush = Router.prototype.push
+  Router.prototype.push = function push(location) {
+   return originalPush.call(this, location).catch(err => err)
+}
   
   export default router
   
