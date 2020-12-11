@@ -48,7 +48,6 @@ class HttpRequest {
       //所有的请求都需要携带token
       let token=getToken();
       if(token){
-        token=JSON.parse(token||{})
         headers['Authorization']=token.token_type +" "+token.access_token
       }
     }
@@ -84,11 +83,11 @@ class HttpRequest {
     if(!data.success&&!data.msg){
       Message.error(data.msg);
     }
-    console.log("错误处理器：",data)
     return   { data, status } ;
   }
 
   interceptors (instance, url) {
+
     console.log(url);
     // 请求拦截
     instance.interceptors.request.use(config => {

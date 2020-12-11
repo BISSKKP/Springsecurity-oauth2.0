@@ -51,8 +51,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.csrf().disable().exceptionHandling().authenticationEntryPoint(
 
 				authenticationEntryPoint).and().authorizeRequests()
-				.antMatchers("/login.html", "/favicon.ico", "/oauth/**", "/get"
-						
+				.antMatchers("/login.html", "/favicon.ico", "/oauth/**", 
+						"/get"
 						,"/swagger/**",
 						"/swagger-resources/**",
 						"/swagger-ui.html",

@@ -33,7 +33,12 @@ public class TokenStoreConfig {
 	@Bean
 	@ConditionalOnProperty(prefix="base.security.oauth2",name="tokenStore",havingValue="redis")
 	public TokenStore redisTokenStore(){
-		return new RedisTokenStore(redisConnectionFactory);
+		
+		RedisTokenStore redisTokenStore=new RedisTokenStore(redisConnectionFactory);
+		
+		redisTokenStore.setAuthenticationKeyGenerator(new MyAuthenticationKeyGenerator());
+		
+		return redisTokenStore;
 	}
 	
 	@Configuration

@@ -93,7 +93,8 @@ export default {
     // 退出登录
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        console.log(state.token["access_token"]);
+        logout(state.token["access_token"]).then(() => {
           commit('setToken', '')
           commit('setAccess', [])
           resolve()
@@ -113,7 +114,7 @@ export default {
           getUserInfo().then(res => {
             console.log("获取用户跟人信息："+res);
             const data = res.data
-            commit('setAvatar', data.avatar)
+            commit('setAvatar',"https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png" )
             commit('setUserName', data.name)
             commit('setUserId', data.user_id)
             commit('setAccess', data.access)
@@ -130,7 +131,7 @@ export default {
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
     getUnreadMessageCount ({ state, commit }) {
       getUnreadCount().then(res => {
-        const { data } = res
+        const data = res.data.body.count
         commit('setMessageCount', data)
       })
     },
@@ -138,7 +139,7 @@ export default {
     getMessageList ({ state, commit }) {
       return new Promise((resolve, reject) => {
         getMessage().then(res => {
-          const { unread, readed, trash } = res.data
+          const { unread, readed, trash } = res.data.body
           commit('setMessageUnreadList', unread.sort((a, b) => new Date(b.create_time) - new Date(a.create_time)))
           commit('setMessageReadedList', readed.map(_ => {
             _.loading = false
@@ -162,7 +163,7 @@ export default {
           resolve(contentItem)
         } else {
           getContentByMsgId(msg_id).then(res => {
-            const content = res.data
+            const content = res.data.body.content
             commit('updateMessageContentStore', { msg_id, content })
             resolve(content)
           })

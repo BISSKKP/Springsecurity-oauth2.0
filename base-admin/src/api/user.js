@@ -1,4 +1,5 @@
 import axios from '@/libs/api.request'
+import cloudPrefix from  '@/libs/cloudPrefix'
 
 export const login = ({ username, password }) => {
   const data = {
@@ -6,7 +7,7 @@ export const login = ({ username, password }) => {
     password
   }
   return axios.request({
-    url: '/auth/dologin',
+    url: cloudPrefix.auth+'/dologin',
     data,
     method: 'post',
     disableSuccessHandler:false,
@@ -18,7 +19,7 @@ export const login = ({ username, password }) => {
 
 export const getUserInfo = () => {
   return axios.request({
-    url: 'auth/user',
+    url: cloudPrefix.auth+'/user',
     params: {
       
     },
@@ -28,28 +29,31 @@ export const getUserInfo = () => {
 
 export const logout = (token) => {
   return axios.request({
-    url: 'logout',
-    method: 'post'
+    url: cloudPrefix.auth+'/oauth/logout',
+    method: 'get',
+    params:{
+      token
+    }
   })
 }
 
 export const getUnreadCount = () => {
   return axios.request({
-    url: 'message/count',
+    url: cloudPrefix.auth+'/message/count',
     method: 'get'
   })
 }
 
 export const getMessage = () => {
   return axios.request({
-    url: 'message/init',
+    url:  cloudPrefix.auth+ '/message/init',
     method: 'get'
   })
 }
 
 export const getContentByMsgId = msg_id => {
   return axios.request({
-    url: 'message/content',
+    url: cloudPrefix.auth+ '/message/content',
     method: 'get',
     params: {
       msg_id
@@ -59,8 +63,8 @@ export const getContentByMsgId = msg_id => {
 
 export const hasRead = msg_id => {
   return axios.request({
-    url: 'message/has_read',
-    method: 'post',
+    url: cloudPrefix.auth+'/message/hasRead',
+    method: 'get',
     data: {
       msg_id
     }

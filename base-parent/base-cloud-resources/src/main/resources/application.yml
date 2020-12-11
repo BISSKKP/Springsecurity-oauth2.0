@@ -21,13 +21,22 @@ eureka:
     lease-expiration-duration-in-seconds: 90 #eureka 服务端在收到最好一次心跳后等待时间上限，单位为秒（默认90秒），超时将删除服务
   
 
-security:
-  oauth2:
-    client:
-      clientId: base-app02
-      clientSecret: 123456
-      user-authorization-uri: http://127.0.0.1:8081/oauth/authorize
-      access-token-uri: http://127.0.0.1:8081/oauth/token
-    resource:
-      jwt:
-        key-uri: http://127.0.0.1:8081/oauth/token_key
+base:
+  security:
+    oauth2:
+      tokenStore: redis #jwt 系统默认取jwt 此时数据交互使用http
+    browser:
+      loginType: JSON
+      rememberMeSeconds: 3000
+      #--没有配置时会自动返回json格式
+      logoutUrl: /logout.html
+      session: 
+        maximumSessions: 1
+        maxSessionsPreventsLogin: false
+        sessionInvalidUrl: /demo-session-expire.html
+    code:
+      image:
+        length: 2
+      sms:
+        length: 2
+        dealUrl: /authen/mobile

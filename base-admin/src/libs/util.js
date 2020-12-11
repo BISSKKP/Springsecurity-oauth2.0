@@ -2,6 +2,10 @@ import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/config'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
+
+import Fingerprint2 from 'fingerprintjs2'
+
+
 const { title, cookieExpires, useI18n } = config
 
 export const TOKEN_KEY = 'token'
@@ -12,7 +16,7 @@ export const setToken = (token) => {
 
 export const getToken = () => {
   const token = Cookies.get(TOKEN_KEY)
-  if (token) return token
+  if (token) return JSON.parse(token)
   else return false
 }
 
@@ -396,4 +400,28 @@ export const setTitle = (routeItem, vm) => {
   const pageTitle = showTitle(handledRoute, vm)
   const resTitle = pageTitle ? `${title} - ${pageTitle}` : title
   window.document.title = resTitle
+}
+/**
+ * 得到浏览器指纹
+ */
+export const getfingerprint=()=>{
+  return new Promise((resolve,reject)=>{
+  // 调用,一般是在main.js或者vuex里面调用
+  Fingerprint2.get(function(components) {
+    const values = components.map(function(component,index) {
+      if (index === 0) { //把微信浏览器里UA的wifi或4G等网络替换成空,不然切换网络会ID不一样
+        return component.value.replace(/\bNetType\/\w+\b/, '')
+      }
+      return component.value
+    })
+    // 生成最终id murmur 
+    console.log(values)  //使用的浏览器信息
+    const murmur = Fingerprint2.x64hash128(values.join(''), 31)
+
+    console.log("浏览器指纹信息："+murmur);
+    resolve(murmur);
+  })
+
+  });
+
 }

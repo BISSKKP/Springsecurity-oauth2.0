@@ -1,4 +1,5 @@
 import axios from '@/libs/api.request'
+import cloudPrefix from  '@/libs/cloudPrefix'
 
 export const getTableData = () => {
   return axios.request({
@@ -23,7 +24,7 @@ export const errorReq = () => {
 
 export const saveErrorLogger = info => {
   return axios.request({
-    url: '/auth/saveErrorLogger',
+    url: cloudPrefix.auth+'/saveErrorLogger',
     data: info,
     method: 'post'
   })
