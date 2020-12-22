@@ -2,6 +2,7 @@ package com.base.security.app.social;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,6 +29,7 @@ public class OpenIdAuthenticationSecurityConfig extends SecurityConfigurerAdapte
     @Autowired
     private SocialUserDetailsService NRSCDetailsService;
 
+    @Lazy
     @Autowired
     private UsersConnectionRepository baseJdbcUsersConnectionRepository;//名字不可替换
 

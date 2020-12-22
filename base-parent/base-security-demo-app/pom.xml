@@ -57,7 +57,7 @@
 		
 		
 			<!-- swagger-springmvc -->
-			<dependency>
+		 	<dependency>
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger2</artifactId>
 				<version>${springfox-swagger.version}</version>
@@ -71,7 +71,7 @@
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-bean-validators</artifactId>
 				<version>${springfox-swagger-bean}</version>
-			</dependency>
+			</dependency> 
 			
 			<dependency>
 				<groupId>io.jsonwebtoken</groupId>
